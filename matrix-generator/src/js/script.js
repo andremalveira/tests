@@ -19,11 +19,14 @@ let containerTable = GetById('matrix_table')
 
 function MarkerShowOptions(e) {
     if(e.target.checked) diagonalColor1.show()
-    else diagonalColor1.hide()
+    else diagonalColor1.hide();
 }
 
 function MarkerChange() {
   checkboxMarker.show()
+
+  if(checkboxMarker.checked) diagonalColor1.show()
+
   checkboxMarker.removeEventListener('change', MarkerShowOptions)
   checkboxMarker.addEventListener('change', MarkerShowOptions)
 }
@@ -54,7 +57,7 @@ function GenerateTable(rows, columns) {
       : second ? `style="background:${color2}"`
       : ''}
       >
-      ${rindex} ${index}
+      ${rindex}${index}
       </td>`
     }
     return (`<tr>${td_html}</tr>`)
@@ -82,9 +85,13 @@ function init() {
     row = JSON.parse(row)
     columns = JSON.parse(columns)
 
-    if(row == columns) MarkerChange()
-    else checkboxMarker.hide()
- 
+    if(row == columns) {
+      MarkerChange()
+    } else {
+      checkboxMarker.hide(); 
+      diagonalColor1.hide()
+    }
+
     GenerateTable(row, columns)
   }
 }
